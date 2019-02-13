@@ -31,9 +31,11 @@ def makeWebhookResult(req):
         return {}
     result = req.get("queryResult")
     parameters = result.get("parameters")
-    zone = (parameters.get("number"))
-    cost = {'1':'50000', '2':'47000', '3':'46000', '4':'45000'}
-    speech = "fees of year" + str(int(zone[0])) + " is " + str(cost[str(int(zone[0]))])
+    zone = (parameters.get("be_year"))
+    print(zone)
+    cost = {'1st':'50000', '2nd':'47000', '3rd':'46000', '4th':'45000'}    
+    speech = "fees of year "+str(result.get("queryText")) + " is " + str(cost[str(zone[0])])
+    print(speech)
     return {
         "fulfillmentText": speech,
         "fulfillmentMessages": [
@@ -45,7 +47,7 @@ def makeWebhookResult(req):
         ],
         #"data": {},
         #"contextOut": [],
-        "source": "BankInterestRates"
+        "source": "SCET-BOTT"
     }
 
 if __name__ == '__main__':
