@@ -47,7 +47,9 @@ def makeWebhookResult(req):
         if isinstance(zone, list):            
             speech = "fees of master's "+ result.get("queryText") + " year is " + str(cost[str(zone[0])])            
         else:
-            speech = "fees of  master's "+ zone + " year is " + str(cost[str(zone)])          
+            if(zone in cost): speech = "fees of  master's "+ zone + " year is " + str(cost[str(zone)])  
+            else : speech = "Enter valid year"
+
     
     elif req.get("queryResult").get("action") == "accurate:exam:form:bachelors":
         result = req.get("queryResult")
@@ -65,6 +67,13 @@ def makeWebhookResult(req):
         if isinstance(zone, list):           
             speech = "Exam form of "+ result.get("queryText") + " year ME will arrive on " + str(cost[str(zone[0])])
         else : speech = "Exam form of "+ zone + " year ME will arrive on " + str(cost[str(zone)])
+    elif req.get("queryResult").get("action") == "fees:last_day":
+        result = req.get("queryResult")
+        speech = "pay fee before 2/5/2019" 
+    elif req.get("queryResult").get("action") == "how:pay:fees":
+        result = req.get("queryResult")
+        speech = "here is the payment link of fees"                
+                   
     return {
         "fulfillmentText": speech,
         "fulfillmentMessages": [
