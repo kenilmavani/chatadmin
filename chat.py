@@ -13,6 +13,9 @@ app = Flask(__name__)
 
 
 @app.route('/', methods=['POST'])
+def index():
+    return render_template('index.html')
+    
 def webhook():
     req = request.get_json(silent=True, force=True)
 
@@ -83,8 +86,6 @@ def makeWebhookResult(req):
             }
             }
         ],
-        #"data": {},
-        #"contextOut": [],
         "source": "SCET-BOTT"
     }
 
@@ -92,5 +93,4 @@ if __name__ == '__main__':
     port = int(os.getenv('PORT', 80))
 
     print ("Starting app on port %d" %(port))
-
-    app.run(debug=True, port=port, host='0.0.0.0')
+    app.run(debug=True, port=5000, host='127.0.0.1')
