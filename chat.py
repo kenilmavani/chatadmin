@@ -40,14 +40,14 @@ def makeWebhookResult(req):
         zone = (parameters.get("be_year"))
         print(zone)
         cost = {'1st':'50000', '2nd':'47000', '3rd':'46000', '4th':'45000'}    
-        speech = "fees of "+ result.get("queryText") + "year is " + str(cost[str(zone[0])])
+        speech = "fees of bachelor's "+ result.get("queryText") + "year is " + str(cost[str(zone[0])])
     elif req.get("queryResult").get("action") == "accurate_me_year_detail":
         result = req.get("queryResult")
         parameters = result.get("parameters")
         zone = (parameters.get("be_year"))
         print(zone)
         cost = {'1st':'50000', '2nd':'47000'}    
-        speech = "fees of "+ zone + " year is " + str(cost[str(zone)])
+        speech = "fees of master's "+ zone + " year is " + str(cost[str(zone)])
     
     elif req.get("queryResult").get("action") == "accurate:exam:form:bachelors":
         result = req.get("queryResult")
@@ -55,7 +55,14 @@ def makeWebhookResult(req):
         zone = (parameters.get("be_year"))
         print(zone)
         cost = {'1st':'18/8/2017', '2nd':'26/9/2016', '3rd':'10/9/2019', '4th':'19/10/2018'}    
-        speech = "Exam form of"+ zone + "year will bachelore arrive on " + str(cost[str()])
+        speech = "Exam form of "+ zone + " year bachelore will arrive on " + str(cost[str(zone)])
+    elif req.get("queryResult").get("action") == "accurate:exam:form:masters":
+        result = req.get("queryResult")
+        parameters = result.get("parameters")
+        zone = (parameters.get("be_year"))
+        print(zone)
+        cost = {'1st':'20/7/2017', '2nd':'1/9/2016'}    
+        speech = "Exam form of "+ zone + " year of masters will arrive on " + str(cost[str(zone)])
     return {
         "fulfillmentText": speech,
         "fulfillmentMessages": [
