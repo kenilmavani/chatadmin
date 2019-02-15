@@ -14,7 +14,6 @@ import pusher
 # Flask app should start in global layout
 app = Flask(__name__)
 
-
 @app.route('/')
 def index():
     return render_template('index.html')
