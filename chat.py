@@ -67,7 +67,7 @@ def makeWebhookResult(req):
         if isinstance(zone, list):           
             speech = "Exam form of "+ result.get("queryText") + " year ME will arrive on " + str(cost[str(zone[0])])
         else : speech = "Exam form of "+ zone + " year ME will arrive on " + str(cost[str(zone)])
-    elif req.get("queryResult").get("action") == "fees:last_day":
+    elif req.get("queryResult").get("action") == "fees:last_day":               
         result = req.get("queryResult")
         speech = "pay fee before 2/5/2019" 
     elif req.get("queryResult").get("action") == "how:pay:fees":
@@ -75,9 +75,9 @@ def makeWebhookResult(req):
         speech = "here is the payment link of fees" 
     elif req.get("queryResult").get("action") == "input.unknown":
         speech = "Answer will be added soon try anoher questions"
-        file = open('abc.txt','w')
-        file.write(req.get("queryResult").get("queryText"))
-                                         
+        file = open('abc.txt','a+')
+        file.write('"'+req.get("queryResult").get("queryText")+'",\n')    
+        file.close()                                         
     return {
         "fulfillmentText": speech,
         "fulfillmentMessages": [
