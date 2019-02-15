@@ -1,22 +1,16 @@
-#!/usr/bin/env python
-
 import urllib
 import json
 import os
+
+from flask import Flask
 from flask import request
 from flask import make_response
-from flask import Flask, request, jsonify, render_template    
-import dialogflow
-import requests
-import json
-import pusher
 
 # Flask app should start in global layout
 app = Flask(__name__)
 
-@app.route('/')
-def index():
-    return render_template('index.html')
+
+@app.route('/', methods=['POST'])
 def webhook():
     req = request.get_json(silent=True, force=True)
 
@@ -29,27 +23,6 @@ def webhook():
     r = make_response(res)
     r.headers['Content-Type'] = 'application/json'
     return r
-
-def detect_intent_texts(project_id, session_id, text, language_code):
-        session_client = dialogflow.SessionsClient()
-        session = session_client.session_path(project_id, session_id)
-
-        if text:
-            text_input = dialogflow.types.TextInput(
-                text=text, language_code=language_code)
-            query_input = dialogflow.types.QueryInput(text=text_input)
-            response = session_client.detect_intent(
-                session=session, query_input=query_input)
-
-            return response.query_result.fulfillment_text
-@app.route('/send_message', methods=['POST'])
-def send_message():
-    message = request.form['message']
-    project_id = os.getenv('DIALOGFLOW_PROJECT_ID')
-    fulfillment_text = detect_intent_texts(project_id, "unique", message, 'en')
-    response_text = { "message":  fulfillment_text }
-
-    return jsonify(response_text)
 
 def makeWebhookResult(req):
     if req.get("queryResult").get("action") == "accurate_be_year_detail":
@@ -114,6 +87,10 @@ def makeWebhookResult(req):
         ],
         "source": "SCET-BOTT"
     }
+    
+if __name__ == '__main__':
+    port = int(os.getenv('PORT', 80))
 
-if __name__ == "__main__":
-        app.run()
+    print ("Starting app on port %d" %(port))
+
+    app.run(debug=True, port=port, host='0.0.0.0')
