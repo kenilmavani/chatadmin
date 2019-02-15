@@ -72,8 +72,12 @@ def makeWebhookResult(req):
         speech = "pay fee before 2/5/2019" 
     elif req.get("queryResult").get("action") == "how:pay:fees":
         result = req.get("queryResult")
-        speech = "here is the payment link of fees"                
-                   
+        speech = "here is the payment link of fees" 
+    elif req.get("queryResult").get("action") == "input.unknown":
+        speech = "Answer will be added soon try anoher questions"
+        file = open('abc.txt','w')
+        file.write(req.get("queryResult").get("queryText"))
+                                         
     return {
         "fulfillmentText": speech,
         "fulfillmentMessages": [
